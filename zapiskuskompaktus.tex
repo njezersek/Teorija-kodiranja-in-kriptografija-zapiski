@@ -8,6 +8,54 @@
 \setlength{\columnsep}{2pt}
 
 \section*{Kriptosistem}
+\begin{align*}
+	\mathcal{B} &\dots \text{besedila} \\
+	\mathcal{C} &\dots \text{kriptogrami} \\
+	\mathcal{K} &\dots \text{ključi} \\
+	\mathcal{E} = \{E_k : \mathcal{B} \to \mathcal{C}; k \in \mathcal{K} \} &\dots \text{kodirne f.} \\
+	\mathcal{D} = \{D_k : \mathcal{C} \to \mathcal{B}; k \in \mathcal{K} \} &\dots \text{dekodirne f.} \\
+\end{align*}
+Za vsak $e \in \mathcal{K}$ obstaja $d \in \mathcal{K}$
+\[ D_d(E_e(x)) = x \quad \forall x \in \mathcal{B}\]
+
+Vsaka kodrirna funkcija $E_k \in \mathcal{E}$ je injektivna.
+
+\section*{Klasični kriptosistem}
+\subsection*{Cezarjeva šifra}
+\[ \mathcal{B} = \mathcal{C} = \mathcal{K} = \mathbb{Z}_{25}\]
+\[ E_k(x) \equiv x + k \mod 25\]
+\[ D_k(y) \equiv y - k \mod 25\]
+
+\subsection*{Substitucijska šifra}
+\[ \mathcal{B} = \mathcal{C} = \mathbb{Z}_{25}, \quad \mathcal{K} = S(\mathbb{Z}_{25})\]
+Ključ je permutacija $\pi \in \mathcal{K}$
+\[ E_k(x) = \pi(x) \]
+\[ D_k(y) = \pi^{-1}(y) \]
+
+\subsection*{Afina šifra}
+\[ \mathcal{B} = \mathcal{C} = \mathbb{Z}_{25}, \quad \mathcal{K} = \mathbb{Z}_{25}^{*} \times \mathbb{Z}_{25} \]
+Ključ $(a, b) \in \mathcal{K}$
+\[ K_{(a,b)}(x) = ax + b \mod 25\]
+\[ D_{(a,b)}(y) = a^{-1}(y - b) \mod 25\]
+
+\subsection*{Vigenerjeva šifra}
+\[ \mathcal{B} = \mathcal{C} = \mathcal{K} = \mathbb{Z}_{25}^n\]
+Ključ $\underline{k} \in \mathcal{K}$
+\[ K_{\underline{k}}(\underline{x}) = \underline{x} + \underline{k} \mod 25\]
+\[ D_{\underline{k}}(\underline{y}) = \underline{y} - \underline{k} \mod 25\]
+
+\subsection*{Permutacijska šifra}
+\textit{Simbolov ne nadomeščamo, ampak jih premešamo}
+\[ \mathcal{B} = \mathcal{C} = \mathbb{Z}_{25}^n, \quad \mathcal{K} = S_n\]
+\[ K_{\pi}(\underline{x}) = \underline{x}_{\pi(1)} + \dots + \underline{x}_{\pi(n)}  \]
+\[ D_{\pi}(\underline{x}) = \underline{x}_{\pi^{-1}(1)} + \dots + \underline{x}_{\pi^{-1}(n)}  \]
+
+\subsection*{Hillova šifra}
+\[ \mathcal{B} = \mathcal{C} = \mathbb{Z}_{25}^n, \quad \mathcal{K} = \{ A \in \mathbb{Z}_{25}^{n\times n} | \det(A) \in \mathbb{Z}_{25}^* \}\]
+Ključ je matrika $A \in \mathcal{K}$
+\[ K_A(\underline{x}) = A \underline{x} \mod 25\]
+\[ D_A(\underline{y}) = A^{-1} \underline{y} \mod 25\]
+
 
 \end{multicols}
 \end{document}
