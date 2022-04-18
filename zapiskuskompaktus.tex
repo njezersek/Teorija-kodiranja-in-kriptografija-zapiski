@@ -56,10 +56,21 @@ Ključ je matrika $A \in \mathcal{K}$
 \[ K_A(\underline{x}) = A \underline{x} \mod 25\]
 \[ D_A(\underline{y}) = A^{-1} \underline{y} \mod 25\]
 
+\section*{Bločne šifre}
+Kripotsistem $(\mathcal{B}, \mathcal{C}, \mathcal{K}, \mathcal{E}, \mathcal{D})$ je bločna šifra dolžine n, 
+če je $\mathcal{B} = \mathcal{C} = \Sigma^n$, kjer je $\Sigma$ končna abeceda.
+
+Vsaka kodirna funkcija je ekvivalentna neki permutaciji $\Sigma^n$, njena dekodirna funkcija pa inverzu te permutacije.
+
+\subsection*{Afina bločna šifra}
+\[ \Sigma = \mathbb{Z}_m \]
+\[ \mathcal{K} = \left\{ (A, \underline{b});\ A \in \mathbb{Z}_m^{n\times n}, \det(A) \in \mathbb{Z}_m^*, \underline{b} \in \mathbb{Z}^n_m \right\}  \]
+\begin{align*}
+	E_{(A, \underline{b})}(\underline{x}) &\equiv A \underline{x} + \underline{b} \mod m \\
+	D_{(A, \underline{b})}(\underline{x}) &\equiv A^{-1} \underline{x} - \underline{b} \mod m 
+\end{align*}
 
 \section*{Teorija števil}
-
-
 
 \subsection{Eulerjeva funkcija}
 Eulerjeva funkcija nam pove koliko je obrnlivih elementov v $\mathbb{Z}_m$.
@@ -95,6 +106,8 @@ vrni: $(r_{i-1}, x_{i-1}, y_{i-1})$
 
 Naj bosta $a, b \in \mathbb{Z}$. Tedaj trojica $(d, x, y)$, ki jo vrne razširjen evklidov algoritem z vhodnim podatkomk $(a, b)$, zadošča:
 \[ax + by = d \text{ in } d = \textrm{gcd}(a, b)\] 
+
+
 
 \end{multicols}
 \end{document}
