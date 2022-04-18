@@ -20,6 +20,33 @@ Za vsak $e \in \mathcal{K}$ obstaja $d \in \mathcal{K}$
 
 Vsaka kodrirna funkcija $E_k \in \mathcal{E}$ je injektivna.
 
+\subsection*{Produkt kriptosistemov}
+Naj bosta $\mathcal{S}_1 = (\mathcal{B}_1, \mathcal{C}_1, \mathcal{K}_1, \mathcal{E}', \mathcal{D}')$ in 
+$\mathcal{S}_2 = (\mathcal{B}_2, \mathcal{C}_2, \mathcal{K}_2, \mathcal{E}'', \mathcal{D}'')$ kriptosistema za katera
+je $\mathcal{C}_1 = \mathcal{B}_2$.
+
+\[ S_1 \times S_2 = (\mathcal{B}_1, \mathcal{C}_2, \mathcal{K}_1 \times \mathcal{K}_2, \mathcal{E}, \mathcal{D})\]
+\begin{align*}
+	E_{(k_1, k_2)} (x) &= E''_{k_2}(K'_{k_1}(x)) \\
+	D_{(k_1, k_2)} (y) &= D'_{k_1}(D''_{k_2}(y))
+\end{align*}
+
+\subsection*{Prevedljivost kriptosistemov}
+Kripto sistem $\mathcal{S} = (\mathcal{B}, \mathcal{C}, \mathcal{K}, \mathcal{E}, \mathcal{D})$ je prevedljiv na
+$\mathcal{S}' = (\mathcal{B}, \mathcal{C}, \mathcal{K}', \mathcal{E}', \mathcal{D}')$, če obstaja $f: \mathcal{K} \to \mathcal{K}'$, 
+da za vsak $k \in \mathcal{K}$ velja:
+\[ E_k = E'_{f(k)} \qquad D_k = D'_{f(k)} \]
+Tedaj pišemo $S \to S'$.
+
+Kriptosistema sta \textbf{ekvivalentna}, če velja $S \to S'$ in $S' \to S$.
+
+Tedaj pišemo $S \equiv S'$.
+
+\subsection*{Idempotentnost kriptosistemov}
+Kriptosistem $S$ je idempotenten, če
+\[ S \times S \equiv S\]
+\textit{Klasični kriposistem so vsi idempotentni.}
+
 \section*{Klasični kriptosistem}
 \subsection*{Cezarjeva šifra}
 \[ \mathcal{B} = \mathcal{C} = \mathcal{K} = \mathbb{Z}_{25}\]
