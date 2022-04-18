@@ -57,5 +57,44 @@ Ključ je matrika $A \in \mathcal{K}$
 \[ D_A(\underline{y}) = A^{-1} \underline{y} \mod 25\]
 
 
+\section*{Teorija števil}
+
+
+
+\subsection{Eulerjeva funkcija}
+Eulerjeva funkcija nam pove koliko je obrnlivih elementov v $\mathbb{Z}_m$.
+
+\[ | \mathbb{Z}_m^* | = \varphi(m) \]
+
+Za $n \in \mathbb{N}$ s paraštevilskim razcepom \\ $ n = p_1^{\alpha_1} \cdot ... \cdot p_m^{\alpha_m}$ velja:
+\[\varphi(n) = \varphi(p_1^{\alpha_1}) \cdot ... \cdot \varphi(p_m^{\alpha_m}) = n \prod_{ p_k \in \mathbb{P}} \left(1-\frac{1}{p_k} \right) \]
+
+\textbf{Euljerjev izrek:}
+\[\textrm{gcd}(a, m) = 1 \Leftrightarrow a^{\varphi(m)} \equiv_m 1; a \in \mathbb{Z}_m^*\]
+\[a,m \in \mathbb{N} \wedge \textrm{gcd}(a, m) = 1 \Rightarrow a^{\varphi(m)} \equiv_m 1\]
+\[a^{\varphi(m)} = 1 \text{ v } \mathbb{Z}_m^*\]
+
+\textbf{Mali Fermatov izrek:} če je $m \in \mathbb{P}$ ($\varphi(m) = m-1$) in $\textrm{gcd}(a,m) = 1$, potem:
+\[a^{m-1} \equiv_m 1\]
+
+\subsubsection*{Razširjen evklidov algoritem}
+
+\begin{koda}
+vhod: $(a, b)$
+($r_0$, $x_0$, $y_0$) = ($a$, 1, 0)
+($r_1$, $x_1$, $y_1$) = ($b$, 0, 1)
+$i$ = 1
+
+dokler $r_i$ $\neq$ 0:
+    $i$ = $i$+1
+    $k_i$ = $r_{i-2} // r_{i-1}$
+    $(r_i, x_i, y_i)$ = $(r_{i-2}, x_{i-2}, y_{i-2}) - k_i(r_{i-1}, x_{i-1}, y_{i-1})$
+konec zanke
+vrni: $(r_{i-1}, x_{i-1}, y_{i-1})$
+\end{koda}
+
+Naj bosta $a, b \in \mathbb{Z}$. Tedaj trojica $(d, x, y)$, ki jo vrne razširjen evklidov algoritem z vhodnim podatkomk $(a, b)$, zadošča:
+\[ax + by = d \text{ in } d = \textrm{gcd}(a, b)\] 
+
 \end{multicols}
 \end{document}
