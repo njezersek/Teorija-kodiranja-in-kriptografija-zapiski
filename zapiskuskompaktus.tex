@@ -97,6 +97,74 @@ Vsaka kodirna funkcija je ekvivalentna neki permutaciji $\Sigma^n$, njena dekodi
 	D_{(A, \underline{b})}(\underline{x}) &\equiv A^{-1} \underline{x} - \underline{b} \mod m 
 \end{align*}
 
+\subsection*{Iterativne šifre}
+Sestavlja jih 
+
+\begin{itemize}
+	\item \textbf{razpored ključev}: Naj bo $K$ ključ. $K$ uporabimo za konstrukcijo krožnih ključev $(K^1,\dots, K^{N_r})$ temu seznamu pravimo razpored ključev.
+	\item \textbf{krožna funkcija}: ima dva argumenta: tekoče stanje in krožni ključ:
+	\[ w^r = g(w^{r-1}, K^{r}) \]
+	Da je dešifriranje možno mora biti $g$ injektivna za vsak fiksen ključ $K$; tj. $\exists g^{-1}:$
+	\[ g^{-1}(g(w, K), K) = w \qquad \forall w, K\]
+	\item \textbf{šifriranje skozi $N_r$ podobnih krogov}: Besedilo $x$ vzamemo za začetno stanje $w^0$:
+	\[ y = g(g(\dots g(g(x, K^1), K^2) \dots, K^{N_r - 1}), K^{N_r})\]
+	\item \textbf{dešifriranje}:
+	\[ x = g^{-1}(\dots g^{-1}(g^{-1}(y, K^{N_r}), K^{N_r - 1}) \dots, K^1)\]
+\end{itemize}
+
+
+\subsection*{Substitucijsko-permutacijsko omrežje}
+je iterativna bločna šifra kjer je $\Sigma = \{0,1\}$, $\ell, m \in \mathbb{N}$ in $\mathcal{B} = \mathcal{C} = \Sigma^{\ell m}$
+
+\begin{itemize}
+	\item \textbf{substitucije}: $\pi_s \in S(\Sigma^\ell)$ \\
+	\textit{S-škatla} - zamenja $\ell$ bitov z drugimi biti
+	\item \textbf{permutacije}: $\pi_p \in S_{\ell m}$ \\
+	\textit{P-škatla} - zamenja $\ell m$ bitov z drugimi biti
+\end{itemize}
+
+\textit{Oznaka za delitev na zloge dolžine $\ell$:}
+\[ x = x_1 x_2 \dots x_m, \quad |x_i| = \ell \]
+
+\textbf{Kodiranje:}
+\begin{koda}
+$w^0 = b$
+za $r = 1, \dots, N_r - 1$ :
+	$u^r = w^{r-1} \oplus K^r$ // primasamo K
+	za $i = 1, \dots, m$ :
+		$\underline{v}_i^r = \pi_s(\underline{u}_i^r)$ // substitucija zlogov
+	$w^r = v_{\pi_p(1)}^r, \dots, v_{\pi_p(\ell m)}^r$ // permutacija bitov
+// zadnji krog
+$u^{N_r} = w^{N_r - 1} \oplus K^{N_r}$
+za $ i = 1, \dots, m$ :
+	$\underline{v}_i^{N_r} = \pi_s(\underline{u}_i^{N_r})$
+vrni $c = v^{N_r} \oplus K^{N_r + 1}$  // beljenje
+\end{koda}
+
+\textbf{Dekodiranje}:
+\begin{koda}
+$v^N_r = c \oplus K^{N_r + 1}$
+za $ i = 1, \dots, m$:
+	$\underline{u}_i^{N_r} = \pi_s^{-1}(\underline{v}_i^{N_r})$
+za $ r = N_r - 1, \dots, 1$:
+	$w^r = u^r \oplus K^{r+1}$
+	$v^r = (w_{\pi_p^{-1}(1)}^r, \dots, w_{\pi_p^{-1}(\ell m)}^r)$
+	za $ i = 1, \dots, m$:
+		$\underline{u}^r_i = \pi_s^{-1}(\underline{v}_i^r)$
+$b = u^1 \oplus K^1$
+\end{koda}
+
+\subsection*{Feistelova šifra}
+je bločna iterativna šifra dolžine $2t$ za abecedo $\Sigma = \{0, 1\}$.
+
+$N_r$ je št. krogov, $K^1, \dots, K^{N_r}$ razpored ključev, ki ga dobimo iz ključa
+$K$ in $f_K: \Sigma^t \to \Sigma^t$ je \textit{Feistelova kodirna funkcija}.
+
+\textbf{En krog kodiranja:}
+\begin{center}
+	\resizebox*{0.5\columnwidth}{!}{\includegraphics{img/feistel.png}}
+\end{center}
+
 \section*{Teorija števil}
 
 \subsection{Eulerjeva funkcija}
