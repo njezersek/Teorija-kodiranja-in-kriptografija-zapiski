@@ -203,7 +203,7 @@ Naj bo $(G, +)$ grupa, $\mathcal{B} = \mathcal{C} = \mathcal{K}$ in $z_1, z_2, \
 \textit{Kodiranje}
 \begin{align*}
 E_{z_i} (b_i) &= b_i + z_i \\	
-D_{z_i} (c_i) &= c_i - z_i \\	
+D_{z_i} (c_i) &= c_i - z_i
 \end{align*}
 
 \subsection*{Samokodirna šifra}
@@ -253,6 +253,32 @@ izračunamo kot z $c_1, \dots, c_m$ uteženo vsoto.
 \begin{center}
 	\resizebox*{0.9\columnwidth}{!}{\includegraphics{img/lfsr.png}}
 \end{center}
+
+\section*{Asimetrična kriptografija}
+\subsection*{RSA}
+$n = pq$ kjer sta $p$ in $q$ različni veliki praštevili.
+
+$m = \varphi(n) = (p-1)(q-1)$
+
+Potem je kriptosistem podan z:
+\begin{align*}
+	\mathcal{B} &= \mathcal{C} = \mathbb{Z}_n \\
+	\mathcal{K} &= \{n\} \times \mathbb{Z}_m^* \\
+	E_{(n,e)}(x) &\equiv x^e \mod n \\
+	E_{(n,d)}(y) &\equiv y^d \mod n
+\end{align*}
+
+\textit{$e$ mora biti tuj $m$}
+
+Kodirnemu ključu $(n, e)$ pripada dekodirni ključ $(n, d)$, kjer je $d = e^{-1} \in \mathbb{Z}_m^*$
+
+\subsection*{Problem diskretnega logaritma}
+Naj bo $G$ multiplikativna grupa. Za dana $\alpha, \beta \in G$, kjer je red elementa $\alpha$ enak $n$, 
+je treba poiskati takšen $x \in \{0, \dots, n-1\}$, da je
+\[ \alpha^x = \beta\]
+Številu $x$ rečemo diskretni logaritem elementa $\beta$ z osnovo $\alpha$.
+
+
 
 \section*{Teorija števil}
 
