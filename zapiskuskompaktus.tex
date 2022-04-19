@@ -176,6 +176,9 @@ Za $n \in \mathbb{N}$ s paraštevilskim razcepom \\ $ n = p_1^{\alpha_1} \cdot .
 \[\varphi(n) = \varphi(p_1^{\alpha_1}) \cdot ... \cdot \varphi(p_m^{\alpha_m}) = n \prod_{ p_k \in \mathbb{P}} \left(1-\frac{1}{p_k} \right) \]
 
 \textbf{Euljerjev izrek:}
+
+Naj bo $G$ končna grupa. Potem red elementa $a \in G$ deli red grupe $G$.
+
 \[\textrm{gcd}(a, m) = 1 \Leftrightarrow a^{\varphi(m)} \equiv_m 1; a \in \mathbb{Z}_m^*\]
 \[a,m \in \mathbb{N} \wedge \textrm{gcd}(a, m) = 1 \Rightarrow a^{\varphi(m)} \equiv_m 1\]
 \[a^{\varphi(m)} = 1 \text{ v } \mathbb{Z}_m^*\]
@@ -203,6 +206,74 @@ Naj bosta $a, b \in \mathbb{Z}$. Tedaj trojica $(d, x, y)$, ki jo vrne razširje
 \[ax + by = d \text{ in } d = \textrm{gcd}(a, b)\] 
 
 
+\subsection*{Grupe}
+\begin{itemize}
+    \item \textbf{grupoid} $(M, \cdot)$ urejen par z neprazno množico $M$ in zaprto opreacijo $\cdot$.
+    \item \textbf{polgrupa} grupoid z asociativno operacijo $ \forall x,y,z \in M : (x\cdot y)\cdot z = x\cdot (y\cdot z)$.
+    \item \textbf{monoid} polgrupa z enoto $ \exists e \in M \ \forall x \in M : e\cdot x = x\cdot e = x$.
+    \item \textbf{grupa} polgrupa v kateri ima vsak element inverz $ \forall x \in M \ \exists x^{-1} \in M : x\cdot x^{-1} = x^{-1}\cdot x = e$.
+    \item \textbf{abelova grupa} grupa s komutativno operacijo $ \forall x,y \in M  : x\cdot y = y\cdot x$.
+\end{itemize} 
+
+\subsubsection{Množica $\mathbb{Z}_m$}
+$\mathbb{Z}_m = \{0,1,...,m-1\}$
+
+Vpeljemo seštevanje $+_m$ po modulu $m$ in množenje $\cdot_m$ po modulu $m$. 
+Dobimo grupo $(\mathbb{Z}_m, +_m)$ in monoid $(\mathbb{Z}_m, \cdot_m)$.
+
+Red elementa $x\in \mathbb{Z}_m$ je $\frac{m}{\gcd(m,x)}$
+
+\subsubsection{Množica $\mathbb{Z}_m^*$}
+To je množica vseh obrnljivih elementov v $\mathbb{Z}_m$ (operacija: množenje).
+\[|\mathbb{Z}^*_m| = \varphi(m)\]
+Element $x\in \mathbb{Z}_m$ je obrnljiv če se da rešiti \emph{diofantsko enačbo}:
+\[ xy + km = 1\]
+za neznanki $y$ (inverz od $x$) in $k$.
+
+\subsubsection{Cayleyjeva tabela}
+Za vsak element množice imamo en stolpec in eno vrstico. V vsakem polju je produkt elementa vrstice in elementa stolpca.
+(Presek vrstice $a$ in stolpca $b$ je $ab$)
+
+\subsubsection{Red elementa}
+Naj bo $(G,\cdot)$ grupa. Red elemneta $a$ je najmanjše naravno število $n \in \mathbb{N}$, da velja
+\[a^n = e\]
+\textit{oznaka:} $\#a$
+
+\subsubsection{Red grupe}
+je število elementov $G$, oznaka $|G|$.
+
+\subsubsection*{Ciklična grupa}
+Grupa je ciklična, če vsebuje $a$ reda $|G|$:
+\[ G = \left\{ a, a^2, a^3, \dots, a^{|G|} = e\right\}\]
+
+\subsection*{Končni obsegi}
+$(K, +,\cdot)$ je obseg, če je
+\begin{itemize}
+	\item $(K, +)$ abelova grupa
+	\item $(K^*, \cdot)$ grupa ($K^* = K \setminus \{0\}$)
+	\item velja distributivnost:
+	\[ a \cdot (b+c) = (a\cdot b) + (a \cdot c)\]
+	\[ (a+b) \cdot c = (a\cdot c) + (b \cdot c)\]
+\end{itemize}
+
+Obseg je \textbf{komutativen}, če je $(K^*, \cdot)$ komutativna.
+
+\subsection*{Praštevilski obsegi}
+Če je $p$ praštevilo, je $(\mathbb{Z}_p, +_p, \cdot_p)$ končen obseg.
+
+
+\subsection*{Galoisovi obsegi}
+\[\text{GF}(p) \cong \mathbb{Z}_p \qquad p \in \mathbb{P}\]
+\[ \text{GF}(p^n) \cong \mathbb{Z}_p[x]/(u) \]
+\begin{itemize}
+	\item $u \in \mathbb{Z}_p[x]$ je nerazcepen polinom stopnje $n$
+	\item elementi $\text{GF}(p^n)$ so ostanki polinomov iz $\mathbb{Z}_p$ pri deljenju z polinomom $u$
+	\item seštevanje je enako kot seštevanje v $\mathbb{Z}_p[x]$
+	\item produkt izračunamo v $\mathbb{Z}_p[x]$ nato pa vzamemo ostanek pri deljenju z $u$
+\end{itemize}
+
+Množica neničelnih/obrnljivih elementov $(GF(p^n)^*, \cdot) \cong (\mathbb{Z}_{p^n-1}, \cdot)$ je vedno izomorfna neki ciklični grupi.
+Generatorjem te grupe rečemo \textbf{primitivni elementi} Galoisovega obsega.
 
 \end{multicols}
 \end{document}
