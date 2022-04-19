@@ -160,9 +160,98 @@ je bločna iterativna šifra dolžine $2t$ za abecedo $\Sigma = \{0, 1\}$.
 $N_r$ je št. krogov, $K^1, \dots, K^{N_r}$ razpored ključev, ki ga dobimo iz ključa
 $K$ in $f_K: \Sigma^t \to \Sigma^t$ je \textit{Feistelova kodirna funkcija}.
 
-\textbf{En krog kodiranja:}
+\textit{En krog kodiranja:}
 \begin{center}
 	\resizebox*{0.5\columnwidth}{!}{\includegraphics{img/feistel.png}}
+\end{center}
+
+\textit{Kodiranje}
+\begin{koda}
+$L_0 = $ leva polovica $b$
+$R_0 = $ desna polovica $b$
+za $i = 1, \dots, N_r$:
+	$L_i = R_{i-1}$
+	$R_i = L_{i-1} \oplus f_{K_i}(R_{i-1})$
+$c = R_{N_r} \| L_{N_r}$
+\end{koda}
+
+\subsection*{DES in AES}
+TO-DO!
+
+\section*{Tokovne šifre}
+Besedilo $b$ razdelimo na bloke $b = b_1 \dots b_t \in \mathcal{B}^t$.
+
+Imamo zaporedje (tok) ključev: $z_1, z_2, \dots \in \mathcal{K}$.
+
+\textit{Kodiranje}
+\begin{koda}
+za $j = 1, \dots, t$:
+	$c_j = E_{z_j}(b_j)$
+$c = c_1 c_2 \dots c_t \in \mathcal{C}^t$
+\end{koda}
+
+\textit{Dekodiranje}
+\begin{koda}
+za $j = 1, \dots, t$:
+	$b_j = D_{z_j}(c_j)$
+$b = b_1 b_2 \dots c_t \in \mathcal{B}^t$
+\end{koda}
+
+\subsection*{Aditivne tokovne šifre}
+Naj bo $(G, +)$ grupa, $\mathcal{B} = \mathcal{C} = \mathcal{K}$ in $z_1, z_2, \dots$ tok ključev.
+
+\textit{Kodiranje}
+\begin{align*}
+E_{z_i} (b_i) &= b_i + z_i \\	
+D_{z_i} (c_i) &= c_i - z_i \\	
+\end{align*}
+
+\subsection*{Samokodirna šifra}
+$\mathcal{B} = \mathcal{C} = \mathcal{K} = \mathbb{Z}_{26}$
+
+Začetni ključ izberemo $z_1 \in \mathbb{Z}_{26}$
+\[ z_i = b_{i-1} \quad \text{za }\ i > 1 \]
+
+\textit{Kodiranje}
+\[ E_{Z_i}(b_i) = b_i + z_i \]
+
+\textit{Dekodiranje}
+\[ D_{Z_i}(c_i) = c_i - z_i \]
+
+\subsection*{Vermanova šifra}
+$\mathcal{B} = \mathcal{C} = \mathcal{K} = \{0, 1\}^n$, ključ izberemo naključno.
+
+\textit{Kodiranje}
+\[ E_k(b) = b \oplus k \]
+\textit{Dekodiranje}
+\[ D_k(c) = c \oplus k \]
+
+\textit{To je pravzaprav Vigenerjeva šifra, le da ima ključ enako dolžino kot besedilo}
+
+\textit{Uporabimo kratko seme za generiranje dolgega toka psevdonaključnih bitov, ki jih uporabimo za ključ.}
+
+\subsection*{Linearna rekurzivna šifra}
+je sinhrona tokovna šifra, pri kateri je
+\[ \mathcal{B} = \mathcal{C} = \mathcal{K} = \mathbb{Z}_s\]
+zaporedje ključev z linearno rekurzinvo enačbo reda $m$ s konstantnimi koeficienti nad $\mathbb{Z}_s$:
+\[ z_i = c_1 z_{i-1} + c_2 z_{i-2} + \dots + c_m z_{i_m} \mod s \]
+Zaporedju lahko priredimo polinom:
+\[ C(x) = 1 + \sum_{i=1}^m c_i x^i \mod s\]
+
+\textit{Kodiranje/Dekodiranje:}
+\begin{align*}
+	E_{z_i}(x_i) &= x_i + z_i \mod s \\
+	D_{z_i}(y_i) &= y_i - z_i \mod s
+\end{align*}
+
+\subsection*{Pomični register z linearno povratno zanko}
+V pomičnem registru je na začetku inicializacijski vektor $(z_1 z_2 \dots z_m)$ (ključ).
+
+Na vsakem koraku izpišemo $z_1$ register pomaknemo v levo zadnji bit $z_m$ pa 
+izračunamo kot z $c_1, \dots, c_m$ uteženo vsoto.
+
+\begin{center}
+	\resizebox*{0.9\columnwidth}{!}{\includegraphics{img/lfsr.png}}
 \end{center}
 
 \section*{Teorija števil}
