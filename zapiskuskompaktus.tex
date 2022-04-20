@@ -340,6 +340,80 @@ Na konec besedila dodano nekaj bitov, ki popisujejo dolžino besedila in toliko 
 
 \textit{Če je kompresijska funkcija odporna na trke, je tudi zgoščevalna funkcija odporna na trke.}
 
+
+\section*{Digitalni podpisi}
+Formalno je \textbf{sistem na digitalno podpisovanje} peterka $(\mathcal{B}, \mathcal{A}, \mathcal{K}, \mathcal{S}, \mathcal{V})$, kjer je
+\begin{itemize}
+	\item $\mathcal{B}$ končna množica sporočil
+	\item $\mathcal{A}$ končna množica podpisov
+	\item $\mathcal{K}$ končna množica ključev
+	\item za vsak ključ $K \in \mathcal{K}$ obstaja algoritem za podpisovanje in preverjanje podpisa
+	\[ \text{sig}_K \in S, \qquad \text{sig}_K : \mathcal{B} \to \mathcal{A} \]
+	\[ \text{ver}_K \in S, \qquad \text{ver}_K : \mathcal{B} \times \mathcal{A} \to \{\text{true}, \text{false}\} \]
+\end{itemize}
+Algoritem za podpisovanje je znan le podpisniku.
+
+\subsection*{Podpisovanje z algoritmom RSA}
+Naj bosta $p, q$ praštevili in $n = pq$. Naj bo $(n, d)$ zasebni in $(n, e)$ javni ključ.
+Potem za $K = (n, e, d)$ definiramo:
+\begin{align*}
+\text{sig}_K(x) &= x^d \mod n \\
+\text{ver}_K(x,y) &= \left( \text{true} \iff x = y^e \mod n \right)
+\end{align*}
+
+\subsection*{ElGamalov sistem za digitalno podpisovanje}
+\subsubsection*{Generiranje ključa}
+Naj bo $p$ takšno praštevilo, ja je v $\mathbb{Z}$ težko izračunati diskretni logaritem in $\alpha \in \mathbb{Z}_p^*$ primitivni element.
+
+Potem je $\mathcal{B} = \mathbb{Z}_p^*$, $\mathcal{A} = \mathbb{Z}_p^* \times \mathbb{Z}_{p-1}$ in 
+$\mathcal{K} = \{(p, \alpha, a, \beta) : \beta \equiv \alpha^a \mod p \}$.
+
+Število $a$ je zasebno. Števila $p$, $\alpha$ in $\beta$ pa so javna.
+
+\subsubsection*{Podpisovanje}
+Podpisnik s ključem $K = (p, \alpha, a, \beta)$ izbere naključno skriteo število $k \in \mathbb{Z}_{p-1}^*$ in določi
+\[ \text{sig}_K(x, k) = (\gamma, \delta)\]
+kjer je
+\begin{align*}
+	\gamma &\equiv \alpha^k \mod p \\
+	\delta &\equiv (x - a\gamma) k^{-1} \mod p
+\end{align*}
+
+\subsubsection*{Preverjanje podpisa}
+Za to potrebujemo $p$, $\alpha$ in $\beta$, ki so javni:
+\[ \text{ver}_K(x, \gamma, \delta) = \left( \text{true} \iff \beta^\gamma \gamma^\delta \equiv_p \alpha^x \right)\]
+
+\subsection*{Digital Signature Standard (DSA)}
+\subsubsection*{Generiranje ključa}
+\begin{itemize}
+	\item Izberi 160-bitno praštevilo $q$
+	\item Izberi 1024-bitno praštevilo $p$, da $q|(p-1)$
+	\item Izberi element $h \in \mathbb{Z}_p^*$ in izračunaj $\alpha = h^{(p-1)/q} \mod p$; ponavljaj dokler $\alpha \neq 1$. ($\alpha$ je generator natanko določen ciklične grupe red $q$ v $\mathbb{Z}_p^*$)
+	\item Izberi naključno naravno število $a < q$
+	\item Izračunaj $\beta = \alpha^a \mod p$
+	\item Janvi ključ osebe $A$ je $(p, q, \alpha, \beta)$, zasebni pa $a$.
+\end{itemize}
+\textit{Opomba:} red $\alpha, \beta, \gamma$ je enak $q$.
+
+\subsubsection*{Podpisovanje}
+\begin{itemize}
+	\item Izberi naključno naravno število $k$, ki je manjše od $q$.
+	\item Izračunaj $\gamma = \left( \alpha^k \mod p\right) \mod q$
+	\item Izračunaj $k^{-1} \mod q$.
+	\item Izračunaj $\delta = k^{-1}(h(x) + a\gamma) \mod q$, kjer je $h(x)$ povzetek sporočila $x$, dobljen z zgoščevalno funkcijo SHA-1.
+	\item Če je $\gamma = 0$ ali $\delta = 0$, začni ponovno.
+	\item Podpis sporočila je $(\gamma, \delta)$.
+\end{itemize}
+
+\subsubsection*{Preverjanje podpisa}
+\begin{itemize}
+	\item Priskirbi si overjeno kopijo javnega kjluča $(p,q,\alpha,\beta)$ podpisnika
+	\item Izračunaj $w = \delta^{-1} \mod q$ in $h(x)$
+	\item Izračunaj $e_1 = h(x)w \mod q$ in $e_2 = \gamma w \mod q$
+	\item Izračunaj $v = (\alpha^{e_1} \beta^{e_2} \mod p ) \mod q $
+	\item Sprejmi podpis, če je $v = \gamma$
+\end{itemize}
+
 \section*{Teorija števil}
 
 \subsection{Eulerjeva funkcija}
