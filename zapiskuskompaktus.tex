@@ -244,15 +244,45 @@ Zaporedju lahko priredimo polinom:
 	D_{z_i}(y_i) &= y_i - z_i \mod s
 \end{align*}
 
+Perioda LFSR reda $m$ je največ $2^m - 1$
+
+Red nerazcepnega polinoma $f(x)$ je najmanjši $t$, da $f(x) | x^t - 1$.
+
+Če ima LFSR nerazcepen karakteristični polinom reda $t$, potem ima LFSR periodo $t$.
+
 \subsection*{Pomični register z linearno povratno zanko}
 V pomičnem registru je na začetku inicializacijski vektor $(z_1 z_2 \dots z_m)$ (ključ).
-
-Na vsakem koraku izpišemo $z_1$ register pomaknemo v levo zadnji bit $z_m$ pa 
-izračunamo kot z $c_1, \dots, c_m$ uteženo vsoto.
 
 \begin{center}
 	\resizebox*{0.9\columnwidth}{!}{\includegraphics{img/lfsr.png}}
 \end{center}
+
+Na vsakem koraku izpišemo $z_1$ register pomaknemo v levo zadnji bit $z_m$ pa 
+izračunamo kot z $c_1, \dots, c_m$ uteženo vsoto.
+
+Če poznamo $z_0, \dots, z_{2m-1}$, lahko rešimo sistem:
+\[
+\begin{bmatrix}
+	z_0 & z_1 & \dots & z_{m-1} \\
+	z_1 & z_2 & \dots & z_{m-2} \\
+	\vdots & \vdots & & \vdots \\
+	z_{m-1} & z_{m} & \dots & z_{2m_2} 
+\end{bmatrix}
+\begin{bmatrix}
+	c_m \\
+	c_{m-1} \\
+	\vdots \\
+	c_1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	z_m \\
+	z_{m+1} \\
+	\vdots \\
+	z_{2m-1}
+\end{bmatrix}
+\]
+Če smo pravilno uganili red $m$ ima sistem enolično rešitev.
 
 \section*{Asimetrična kriptografija}
 \subsection*{RSA}
@@ -277,6 +307,22 @@ Naj bo $G$ multiplikativna grupa. Za dana $\alpha, \beta \in G$, kjer je red ele
 je treba poiskati takšen $x \in \{0, \dots, n-1\}$, da je
 \[ \alpha^x = \beta\]
 Številu $x$ rečemo diskretni logaritem elementa $\beta$ z osnovo $\alpha$.
+
+\subsubsection*{Shanksov algoritem (veliki korak - mali korak) }
+\begin{koda}
+vhod: $G$ grupa, $\alpha, \beta \in G$, $n = \text{red}(\alpha)$
+izhod: $x = \log_\alpha \beta$
+$m = \lceil \sqrt{n} \rceil$
+za $j = 0, \dots, m-1$:
+	$(j, \alpha^{m-j}) \to L_1$
+uredi $L_1$ po drugi komponenti
+za $i = 0, \dots, m-1$:
+	$(i, \beta \alpha^{-i}) \to L_2$
+uredi $L_2$ po drugi komponenti
+poisci $(j, y) \in L_1$ in $(i, y) \in L_2$
+$x = (mj + i)$
+vrni $x$
+\end{koda}
 
 \subsection*{Diffie-Hellmanova izmenjava ključev}
 \begin{itemize}
@@ -551,6 +597,19 @@ Naj bo $G$ končna grupa. Potem red elementa $a \in G$ deli red grupe $G$.
 \textbf{Mali Fermatov izrek:} če je $m \in \mathbb{P}$ ($\varphi(m) = m-1$) in $\textrm{gcd}(a,m) = 1$, potem:
 \[a^{m-1} \equiv_m 1\]
 
+\textbf{Fermantov test praštevilskosti}
+$p$ praštevilo $\implies$ $a^{p-1} \equiv_p 1$
+
+Če želimo preveriti ali je $p$ praštevilo, zgornjo trditev preizkusimo za nekaj naključnih $a$-jev.
+
+\subsection{Linearne diofantske enačbe}
+Diofantska enačba $ax + by = c$ ima rešitev $\Leftrightarrow$ $gcd(a, b) | c$. 
+
+Če ima eno rešitev $(x_0, y_0) \in \mathbb{Z}^2$ ima neskončno množico rešitev:
+\[\{(x_k, y_k) : k \in \mathbb{Z}\}\]
+\[x_k = x_0 - k\frac{b}{\textrm{gcd(a, b)}}\]
+\[y_k = y_0 + k\frac{a}{\textrm{gcd(a, b)}}\]
+
 \subsubsection*{Razširjen evklidov algoritem}
 
 \begin{koda}
@@ -611,6 +670,10 @@ je število elementov $G$, oznaka $|G|$.
 Grupa je ciklična, če vsebuje $a$ reda $|G|$:
 \[ G = \left\{ a, a^2, a^3, \dots, a^{|G|} = e\right\}\]
 
+$x$ je generator grupe $\mathbb{Z}_p^*$ $\iff$ $\# x = p - 1$
+
+$x$ je generator grupe $\mathbb{Z}_p^*$ $\iff$ $x^{\frac{p-1}{p_i}} \neq 1 \mod p$, za vsak $i$, jer je $p-1 = p_1^{k_1} \dots p_l^{k_l}$.
+
 \subsection*{Končni obsegi}
 $(K, +,\cdot)$ je obseg, če je
 \begin{itemize}
@@ -639,6 +702,19 @@ Obseg je \textbf{komutativen}, če je $(K^*, \cdot)$ komutativna.
 
 Množica neničelnih/obrnljivih elementov $(GF(p^n)^*, \cdot) \cong (\mathbb{Z}_{p^n-1}, \cdot)$ je vedno izomorfna neki ciklični grupi.
 Generatorjem te grupe rečemo \textbf{primitivni elementi} Galoisovega obsega.
+
+\subsection*{Kitajski izrek o ostankih}
+Naj bodo $n_1, \dots, n_k$ paroma tuja.
+\begin{align*}
+	x &\equiv a_1 \mod n_1 \\
+	 & \vdots \\
+	x &\equiv a_k \mod n_k \\
+\end{align*}
+\[ N = n_1 \cdot n_2 \cdot \dots \cdot n_k \]
+Vse rešitve zgornjega sistema so kongurentne po modulu $N$.
+
+\[ N_i = \frac{N}{n_i} \qquad M_i = \text{ inverz } N_i \text{ po modulu } n_i\]
+\[x = \sum_{i=1}^{k} a_i M_i N_i \mod N\]
 
 \end{multicols}
 \end{document}
