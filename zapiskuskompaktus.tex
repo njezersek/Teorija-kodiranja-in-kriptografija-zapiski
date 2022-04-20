@@ -464,6 +464,72 @@ za $ j = 1, \dots, m$:
 $b = b_1 \dots b_m$
 \end{koda}
 
+\section*{Napadi na kriptosisteme}
+\subsection*{Pasivni napadi}
+\begin{itemize}
+	\item \textbf{Napad za golim kriptogramom}: nasprotnik pozna enega ali več kriptogramov.
+	\item \textbf{Napad z znanim besedilom}: nasprotnik pozna enega ali več parov (besedilo, kriptogram).
+	\item \textbf{Napad z izbranim besedilom}: nasprotnik ima začasen dostop do kodirnega postopka. Generira pare $(b,c)$ za izbrana besedila $b$. \textit{V primeru kriptosistemov z javnimi ključi tak napad štejemo za paseiven.}
+\end{itemize}
+
+\subsection*{Aktivni napadi}
+\begin{itemize}
+	\item \textbf{Napd z izbranim kriptogramom}: nasprotnik za izbrane kriptograme lahko zahteva ustrezna besedila. Kasneje dobi kriptogram $c$, ki ga želi dekodirat.
+	\item \textbf{Prilagodljivi napad z izbranim kriptogramom}: nasprotnik skuša dešifirati $c$ med tem lahko za izbrane kriptograme lahko zahteva ustrezna besedila.
+\end{itemize}
+
+\subsection*{Stopnje varnosti}
+\begin{itemize}
+	\item \textbf{Brezpogojna varnost}: tudi če ima napadalec neomejene računske vire, samo iz kriptograma na izve nobene informacije o besedilu (razen dolžine)
+	\item \textbf{Semantična varnost}: napadalec s polinomsko omejenimi viri samo iz kriptograma z nezanemarljivo verjetnostjo ne izve nobene informacije o besedilu (razen dolžine).
+	\item \textbf{Polinomska varnost}: napadalec s polinomsko omejenimi viri z nezanemarljivo verjetnostjo ne more ločiti med kriptogramoma danih besedil iste dolžine.
+\end{itemize}
+\textit{Za pasivnega napadalca sta semantična in polinomska varnost ekvivalentni.}
+
+\subsection*{Sistemi s popolno tajnostjo (LPT)}
+Simetrični kriptosistem $\mathcal{S} = (\mathcal{B}, \mathcal{C}, \mathcal{K}, \mathcal{E}, \mathcal{D})$ opremimo
+z verjetnostno porazdelitvijo na množici $\mathcal{B} \times \mathcal{K}$
+
+\begin{align*}
+	B \quad &\dots \quad \text{slučajna sprem. z zalogo vrednosti } \mathcal{B} \\
+	K \quad &\dots \quad \text{slučajna sprem. z zalogo vrednosti } \mathcal{K} \\
+	C \quad &\dots \quad \text{slučajna sprem. z zalogo vrednosti } \mathcal{C} \\
+\end{align*}
+$C$ je določena z $B$ in $K$
+
+Predpostavimo, da st $B$ in $K$ neodvisni:
+\[ P(B = b \cap K = k) = P(B = b) P(K = k) \]
+za vsak $b \in \mathbb{B}$ in vsak $c \in \mathcal{C}$ velja še:
+\[ P(B = b) > 0 \quad \text{oziroma} \quad P(C = c) > 0 \]
+
+Potem ima kriptosistem $S$ \textbf{lastnost popolne tajnosti} natanko tedaj, ko
+\[ \forall b \in \mathcal{B}, c \in \mathcal{C}: \ P(B = b | C = c) = P(B = b)\]
+
+Vrednost $C$ za dana $b \in \mathcal{B}$ in $k \in \mathcal{K}$ je:
+\[ c = E_k(b) \]
+
+Verjetnost dogodka $(C = c)$ dobimo iz formule za popolno verjetnost:
+\[ P(C = c) = \sum_{b \in \mathcal{B}} P(C = c | B = v) P(B = b) \]
+\[ P(C = c | B = b) = \sum_{k \in \mathcal{K}:\ E_k(b) = c} P(K = k) \]
+
+\subsubsection*{Verjetnostne formule}
+\begin{align*}
+	P(A|B) &= \frac{P(A \cap B)}{P(B)} & P(A|B) &= \frac{P(B|A)P(A)}{P(B)} 
+\end{align*}
+
+\textit{Trditev:} Če ima kriptosistem lastnost popolne tajnosti, za 
+vsak $b \in \mathcal{B}$ in $c \in \mathcal{C}$ obstajaj $k \in \mathcal{K}$, 
+da velja $E_k(b) = c$. In $|\mathcal{B}| \leq |\mathcal{C}| \leq |\mathcal{K}|$
+
+
+\textit{Izrek (Shannon):} Naj velja $|\mathcal{B}| = |\mathcal{C}| = |\mathcal{K}|$.
+Potem ima kriptosistem $S$ lastnost popolne tajnosti natanko tedaj, ko
+\begin{itemize}
+	\item za vsak $b \in \mathcal{B}$ in vsak $c \in \mathcal{C}$ obstaja en $k \in \mathcal{K}$,
+	da je $E_k(b) = c$
+	\item slučajna spremnljivka $K$ je enakomerno porazdeljena.
+\end{itemize}
+
 \section*{Teorija števil}
 
 \subsection{Eulerjeva funkcija}
