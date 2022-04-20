@@ -1,7 +1,7 @@
 \input{config.tex}
 \begin{document} 
 
-\begin{multicols}{4}
+\begin{multicols}{5}
 \setlength{\premulticols}{1pt}
 \setlength{\postmulticols}{1pt}
 \setlength{\multicolsep}{1pt}
@@ -307,7 +307,38 @@ Formalna definicija:
 
 Naj bo $B = \alpha^b \mod p$ in $A = \alpha^a \mod p$. Potem kodirnemu kjluču $(a, B)$ ustreza dekodirni ključ $(b, A)$.
 
+\section*{Zgoščevalne funkcije}
+Zgoščevalna funkcija besedilu poljubne dolžine kratek izvleček.
 
+Želene lastnosti:
+\begin{itemize}
+	\item \textbf{Naključnost}: Če se dve sporočili razlikujeta na enem samem mestu morata povzetka izgledati kot neodvisno izbrani naključni števili.
+	\item \textbf{Odpornost praslik}: za poljuben izvleček $z$ je računsko nemogoče poiskati sporočilo $x$, ja je $h(x) = z$. Oz. zgoščevalna funkcija je \textbf{enosmerna}.
+	\item \textbf{Odpornost drugih praslik}: za dano sporočilo $x$ je nemogoče najti drugo sporočilo $x'$, ki ima enak izvleček.
+	\item \textbf{Odpornost na trke}: računsko je nemogoče poiskati dve različni sporočili $x$ in $x'$ z enakim povzetkom.
+\end{itemize}
+\textbf{Trk} je par različnih sporočil z enakim povzetkom.
+
+\subsection*{Tipična zgoščevalna funkcija}
+\begin{itemize}
+	\item \textbf{Komprsijska funkcija}: $f: \{0,1\}^{r+n} \to \{0,1\}^n$
+	\item \textbf{Zgoščevalna funkcija}: $h: \{0,1\}^* \to \{0,1\}^n$
+\end{itemize}
+
+Zgoščevalna funkcija iterativno kliče kompresijsko funkcijo.
+
+\begin{koda}
+$H_0 = IV$
+za $i = 1, \dots, t$:
+	$H_i = f(H_{i-1} \| x_i)$
+$h(x) = H_t$
+\end{koda}
+
+Tukaj je $IV$ začetno stanje, $x_i$ pa so bloki besedila.
+
+Na konec besedila dodano nekaj bitov, ki popisujejo dolžino besedila in toliko ničel, da se besedilo lahko razdeli na enako velike bloke.
+
+\textit{Če je kompresijska funkcija odporna na trke, je tudi zgoščevalna funkcija odporna na trke.}
 
 \section*{Teorija števil}
 
