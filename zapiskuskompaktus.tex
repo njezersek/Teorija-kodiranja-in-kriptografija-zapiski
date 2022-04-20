@@ -278,6 +278,35 @@ je treba poiskati takšen $x \in \{0, \dots, n-1\}$, da je
 \[ \alpha^x = \beta\]
 Številu $x$ rečemo diskretni logaritem elementa $\beta$ z osnovo $\alpha$.
 
+\subsection*{Diffie-Hellmanova izmenjava ključev}
+\begin{itemize}
+	\item Alenka in Bojan se dogovorita za veliko praštevilo $p$ in $\alpha \in \mathbb{Z}_p^*$, ki ima velik red $n$.
+	\item Alenka si izbere naključno število $a \in \{1, \dots, n-1\}$,
+	izračuna $A = \alpha^a \mod p$ in pošlje $A$ Bojanu.
+	\item Bojan si izbere naključno število $b \in \{1, \dots, n-1\}$, 
+	izračuna $B = \alpha^b \mod p$ in pošlje $B$ Alenki.
+	\item Alenka in bojan vsak zase izračunata skupni tajni ključ $K = \alpha^{ab} = A^b = B^a$
+\end{itemize}
+\textit{Varnost temelji na težavnosti diskretnega logaritma.}
+
+\textit{Zaradi možnosti napada srednjega moža je pri izmenjavi ključev nujna avtentikacija!}
+
+\subsection*{ElGamalov kriptosistem}
+\begin{itemize}
+	\item Alenka in Bojan izmenjata tajni ključ k z Diffie-Hellmanovo shemo
+	\item Alenka želi poslati sporočilo $x$. Izračuna kriptogram $y = k\cdot x \mod p$ in ga pošlje Bojanu.
+	\item Bojan izračuna $x = k^{-1} \cdot y \mod p$
+\end{itemize}
+Formalna definicija:
+\begin{align*}
+	\mathcal{B} &= \mathcal{C} = \mathbb{Z}_p^* \\
+	\mathcal{K} &= \mathbb{Z}_p^* \times \mathbb{Z}_p^* \\
+	E_{(a,B)}(x) &\equiv B^a \cdot x \mod p \\
+	D_{(b,A)}(y) &\equiv A^{p-b-1} \cdot y \mod p \\
+\end{align*}
+
+Naj bo $B = \alpha^b \mod p$ in $A = \alpha^a \mod p$. Potem kodirnemu kjluču $(a, B)$ ustreza dekodirni ključ $(b, A)$.
+
 
 
 \section*{Teorija števil}
