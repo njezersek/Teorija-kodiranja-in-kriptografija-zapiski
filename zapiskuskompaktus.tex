@@ -597,10 +597,23 @@ Naj bo $G$ končna grupa. Potem red elementa $a \in G$ deli red grupe $G$.
 \textbf{Mali Fermatov izrek:} če je $m \in \mathbb{P}$ ($\varphi(m) = m-1$) in $\textrm{gcd}(a,m) = 1$, potem:
 \[a^{m-1} \equiv_m 1\]
 
-\textbf{Fermantov test praštevilskosti}
+\subsubsection{Fermantov test praštevilskosti}
 $p$ praštevilo $\implies$ $a^{p-1} \equiv_p 1$
 
 Če želimo preveriti ali je $p$ praštevilo, zgornjo trditev preizkusimo za nekaj naključnih $a$-jev.
+
+\subsubsection*{Miller-Rabinov test}
+Če je $n$ praštevilo mora veljati:
+
+Naključno število $a$ je tuje $n$.
+
+Če zapišemo $n - 1 = 2^s d$, kjer je $d$ liho število, velja eno izmed:
+\begin{itemize}
+	\item $a^d \equiv_n 1$
+	\item $\exists r \in {0,1,\dots, s-1}$, da je $a^{2^r d} \equiv_n -1$
+\end{itemize}
+
+\textit{Verjetnost (napake), da zgornje velja za sestavljeno število je največ $\frac{1}{4}$.}
 
 \subsection{Linearne diofantske enačbe}
 Diofantska enačba $ax + by = c$ ima rešitev $\Leftrightarrow$ $gcd(a, b) | c$. 
