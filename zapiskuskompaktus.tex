@@ -414,6 +414,56 @@ Za to potrebujemo $p$, $\alpha$ in $\beta$, ki so javni:
 	\item Sprejmi podpis, če je $v = \gamma$
 \end{itemize}
 
+
+\section*{Uporaba bločnih šifer}
+\subsection*{Elektronska kodna knjiga (ECB)}
+Naivni način uporabe bločnih šifer. Z istim klučem kodiramo zaporedoma bolk po blok.
+
+\begin{align*}
+	c_i &= E_k(b_i) \\
+	b_i &= D_k(c_i)
+\end{align*}
+
+\subsection*{Veriženje kodnih blokov (CBC)}
+Izberemo inicializacijski vektor $IV$ dolžine $n$.
+
+\textit{Kodiranje}
+\begin{koda}
+$c_0 = IV$
+za $j = 1, \dots, m$:
+	$c_j = E_e(b_j \oplus c_{j-1})$
+$c = c_1  \dots c_m$
+\end{koda}
+
+\textit{Dekodiraje}
+\begin{koda}
+$c_0 = IV$
+za $j = 1, \dots, m$:
+	$b_j = D_e(c_j) \oplus c_{j-1}$
+$b = b_1  \dots b_m$
+\end{koda}
+
+Napaka na bloku $c_j$ vpliva le na $b_j$ in $b_{j+1}$
+
+\subsection*{Način s števcem (CM)}
+Izberemo števec $ctr$ dolžine $n$. Besedilo razdelimo na bloke dolžine $n$: $b = b_1 \dots b_m$.
+
+\textit{Kodiranje}
+\begin{koda}
+za $ j = 1, \dots, m$:
+	$l_j = ctr + j - 1 \mod 2^n$
+	$c_j = b_j \oplus E_e(l_j)$
+$c = c_1 \dots c_m$
+\end{koda}
+
+\textit{Dekodiranje}
+\begin{koda}
+za $ j = 1, \dots, m$:
+	$l_j = ctr + j - 1 \mod 2^n$
+	$b_j = c_j \oplus E_e(l_j)$
+$b = b_1 \dots b_m$
+\end{koda}
+
 \section*{Teorija števil}
 
 \subsection{Eulerjeva funkcija}
