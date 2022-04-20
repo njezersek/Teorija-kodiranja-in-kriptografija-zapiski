@@ -113,7 +113,7 @@ Sestavlja jih
 \end{itemize}
 
 
-\subsection*{Substitucijsko-permutacijsko omrežje}
+\subsection*{Substitucijsko-permutacijsko omrežje (SPN)}
 je iterativna bločna šifra kjer je $\Sigma = \{0,1\}$, $\ell, m \in \mathbb{N}$ in $\mathcal{B} = \mathcal{C} = \Sigma^{\ell m}$
 
 \begin{itemize}
@@ -670,9 +670,12 @@ je število elementov $G$, oznaka $|G|$.
 Grupa je ciklična, če vsebuje $a$ reda $|G|$:
 \[ G = \left\{ a, a^2, a^3, \dots, a^{|G|} = e\right\}\]
 
-$x$ je generator grupe $\mathbb{Z}_p^*$ $\iff$ $\# x = p - 1$
 
-$x$ je generator grupe $\mathbb{Z}_p^*$ $\iff$ $x^{\frac{p-1}{p_i}} \neq 1 \mod p$, za vsak $i$, jer je $p-1 = p_1^{k_1} \dots p_l^{k_l}$.
+\[ \text{red}_{\mathbb{Z}_p^*}(\alpha^i) = \text{red}_{\mathbb{Z}_p^*}(i) = \frac{p-1}{\gcd(i, p-1)}\]
+
+$x$ je generator grupe $\mathbb{Z}^*_p$ $\iff$ $\# x = p - 1$
+
+$x$ je generator grupe $\mathbb{Z}^*_p$ $\iff$ $x^{\frac{p-1}{p_i}} \neq 1 \mod p$, za vsak $i$, jer je $p-1 = p_1^{k_1} \dots p_l^{k_l}$.
 
 \subsection*{Končni obsegi}
 $(K, +,\cdot)$ je obseg, če je
