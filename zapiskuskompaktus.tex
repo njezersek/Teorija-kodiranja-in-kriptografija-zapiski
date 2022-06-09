@@ -731,6 +731,161 @@ Vse rešitve zgornjega sistema so kongurentne po modulu $N$.
 
 \[ N_i = \frac{N}{n_i} \qquad M_i = \text{ inverz } N_i \text{ po modulu } n_i\]
 \[x = \sum_{i=1}^{k} a_i M_i N_i \mod N\]
+\newpage
 
+\textbf{Kod} $\mathcal{C}$ nad abecedo $\Sigma$ je končna podmnožica $\Sigma^*$,
+$\mathcal{C}\subset \Sigma^*$
+\section{Dekodiranje}
+\begin{itemize}
+	\item \textbf{Kodiranje} je preslikava $f: \mathcal{S}\rightarrow\mathcal{C}$
+	\item Po prenosu po komunikacijskem kanalu prejmemo besedo $y$.
+	\item Če $y \notin \mathcal{C}$, ji po nekeem pravilu priredimo besedo
+		$x\prime \in \mathcal{C}$. Pravimo, da besedo \textbf{dekodiramo}.
+\end{itemize}
+\section{Bločni kodi}
+Kod $\mathcal{C}$ nad abecedo $\Sigma$ je \textbf{bločni kod dolžine $n$}, če imajo vse kodne besede dolžino $n$.
+
+\textbf{Hammingova razdalja} med besedama $x$ in $y$ je definirana kot
+\[ d(x,y) = |\{i;x_i\neq y_i\}|\]
+\textbf{Teža} besede $x$ ($t(x)$) je definirana kot število neničelnih mest v besedi.
+
+\[d = d(\mathcal{C}) = \min\{d(x,y); x,y\in \mathcal{C}, x \ne y\}\]
+$d$ imenujemo \textbf{razmaknjenost} koda.
+
+Kod $\mathcal{C}$ je $(n,M,d)$-kod, če
+\begin{itemize}
+	\item ima bločno dolžino $n$,
+	\item št. kodnih besed je $M$,
+	\item razmaknjenost je $d$.
+\end{itemize}
+
+\subsection{Pravilo najmanjše napake}
+Maksimiziramo
+\[P[x\ \text{oddana}|y\ \text{sprejeta}]\].
+\[P[x|y] = \frac{P[y|x]\cdot P[x]}{P[y]} = \frac{P[y|x]\cdot P[x]}{\sum_{c\in\mathcal{C}}P[y|c]\cdot P[c]}\]
+\subsection{Pravilo največje verjetnosti}
+Maksimiziramo
+\[P[y\ \text{sprejeta}|x\ \text{oddana}]\]
+Če so vse kodne besede enako verjetne, sta PNN in PNV enaki.
+\subsection{Pravilo najbližjega soseda}
+$y\in \Sigma^n$ dekodiramo v tisto besedo $x\in \mathcal{C}$, pri kateri je $d(x,y)$ najmanjša.
+
+Če je $p<1/2$, dajeta PNN in PNS enak rezultat.
+
+\subsection{Napaka}
+$y = x+e$, kjer je $e\in \Sigma^n$ \textbf{napaka}.
+\begin{itemize}
+	\item Kod \textbf{odkrije} $s$ napak, če $x+e\notin \mathcal{C}$ za vse $x\in \mathcal{C}$
+		in vse $e$, za katere je $1\le t(e)\le s$
+	\item Kod \textbf{popravi} $s$ napak, če
+		\[d(x+e,x)<d(x+e,x\prime\]
+		za vse $x,x\prime\in\mathcal{C}$ in vse $e\in\Sigma^n$, za katere je $t(e)\le s$.
+\end{itemize}
+\section{Linearni kodi}
+Kod je \textbf{linearen}, če je vektorski podprostor $\Sigma^n$.
+\[c_1,c_2\in\mathcal{C}, a,b\in \Sigma\Rightarrow ac_bc_2\in \mathcal{C}\]
+$k$ je dimenzija koda.
+\[M = q^k\]
+$[n,k,d]$-kod nad $GF(q)$ je linearen $(n,q^k,d)$-kod.
+\[d = \min_{x\in \mathcal{C}, x\neq 0} t(x)\]
+\textbf{Generatorske matrike} $G$ koda $\mathcal{C}$ je matrika velikosti $k\times n$.
+Njene vrstice so kodne besede, ki sestavljajo baso kode.
+\subsection{Kodiranje}
+\[c = s\times G\]
+$\mathcal{C}^\perp = \{x\in\Sigma^n; cx^T=0\forall c\in\mathcal{C}\}$ je \textbf{dualni kod} koda $\mathcal{C}$.
+
+Generatorsko matriko koda $\mathcal{C}^\perp $ imenujemo \textbf{nadzorna matrika} koda $\mathcal{C}$
+
+\[G\in GF(q)^{k\times n}, H\in GF(q)^{(n-k)\times n}\]
+\[\text{rang}(G) = k, \text{rang}(H) = n-k\]
+potem velja: $G$ je generatorska in $H$ nadzorna matrika nekega linearnega koda
+$\Leftrightarrow G\times H^T=0$.
+\subsection{Sindrom}
+\[y = x+e\]
+$Hy^T$ imenujemo \textbf{sindrom} besede $y$.
+\[Hy^T = He^T\]
+\subsection{Dekodiranje}
+\begin{itemize}
+	\item Izračunaj $\sigma = Hy^T$
+	\item V tabeli $T$ poišči $e$: $He^T = \sigma$
+		(če ga ni, zahtevaj ponoven prenos besede)
+	\item Vrni $x = y-e$
+\end{itemize}
+\subsection{Razmaknjenost}
+Naj bo $\mathcal{C}$ linearen kod nad abecedo $GF(q)$ z ndzorno matriko $H$.
+Potem velja:
+\[d(\mathcal{C})\ge d \Leftrightarrow\ \text{vsaka množica $d-1$ stolpcev matrike $H$ je linearno neodvisna nad $GF(q)$}\]
+\[d(\mathcal{C}) = \max\{d;\text{vsakih $d-1$ stolpcev $H$ je linearno neodvisnih}\}\]
+Koda sta \textbf{ekvivalentna}, če lahko iz enega dobimo drugega z zaporedjem transormacij \textbf{kodne matrike}
+\begin{itemize}
+	\item premutacije stolpcev
+	\item premutacije simbolov v izbranem stolpcu
+	\item permutacije vrstic
+\end{itemize}
+\[\mathcal{C}_1\sim\mathcal{C}_2\]
+Za vsak $[n,k,d]$-kod obstaja ekvivalenten kod z generatorsko matriko v standardni obliki
+\[[I_k|A]\]
+\section{Meje za kode}
+\[ A_q(n, d) = \max\{M; \exists (n,M,d)\ \text{kod nad}\ GF(q)\}\]
+\[ A_q(n,1) = q^n\]
+\[ A_2(n,2) = 2^{n-1}\]
+\[|K(x,r)|=\sum_{k=0}^r\binom{n}{k}(q-1)^k\]
+\subsection{Hamingova zgornja meja}
+\[A_q(n,d) \le \frac{q^n}{\sum_{k=0}^{\lfloor\frac{d-1}{2}\rfloor}\binom{n}{k}(q-1)^k}\]
+Če kod dosega Hammingovo mejo, je \textbf{popoln}.
+\subsection{Gilbert-Varshamova spodnja meja}
+\[A_q(n,d) \ge \frac{q^n}{\sum_{k=0}^{d-1}\binom{n}{k}(q-1)^k}\]
+\subsection{Hammingov kod reda $r$}
+$[n,k,d]$-kod dolžine $n=\frac{q^r-q}{q-1}$ in dimenzije $k = n-r$.
+\subsection{Singletonova meja}
+Naj bo $\mathcal{C}$ $(n,M,d)$-kod nad $GF(q)$. Potem je $M \le q^{n-d+1}$.
+
+
+Za linearni $[n,k,d]$-kod je $d\le n-k+1$.
+
+Linearni $[n,k,d]$-kod lahko popravi največ $\lfloor\frac{n-k}{2}\rfloor$ napak.
+\section{Ciklični kodi}
+Besedo $\hat{x} =x_nx_1\cdots x_{n-1}$ imenujemo \textbf{ciklični pomik} besede $x$.
+
+Linearen kod je \textbf{cikličen}, če velja
+\[x\in\mathcal{C}\Rightarrow\hat{x}\in\mathcal{C}\]
+Besedo $x=x_1\cdots x_n$ identificiramo s polinomom $x(t) = x_1+x_2t+\cdots +x_nt^{n-1}\in GF(q)[t]/(t^n-1)$.
+Besedi $\hat{x}$ ustreza polinom $t\cdot x(t)(\mod t^n-1)$.
+
+Naj bo $\mathcal{C}$ cikličen kod in $g(t)$ neničeln polinom minimalne stopnje v $\mathcal{C}$.
+Potem velja:
+\begin{itemize}
+	\item $\mathcal{C} = \left<g(t)\right> = \{g(t)\cdot a(t) \mod t^n-1; a(t)\in GF(q)[t]\}$ (ideal, ki ga generira $g(t)$)
+	\item $g(t)|t^n-1$
+	\item $\text{dim} \mathcal{C} = k = n -\text{deg}(g)$ in $B = \{g(t), tg(t),\cdots,t^{k-1}g(t)\}$ je baza $\mathcal{C}$.
+\end{itemize}
+Ciklični kodi dolžine $n$ nad $GF(q)$ ustrezajo deliteljem polinoma $t^n-1$.
+
+Če $\mathcal{C}=\left<g(t)\right>$, imenujemo $g$ \textbf{generatorski polinom} koda $\mathcal{C}$.
+
+\[G=\begin{bmatrix}g(t) \\ tg(t) \\ \vdots \\ t^{k-1} g(t)\end{bmatrix}\]
+je generatorska matrika za $\mathcal{C}$.
+
+\[t^{n-k+i} = q_i(t)g(t)+r_i(t)\]
+Potem velja:
+\[t^{n-k+i}-r_i(t) = q_i(t)g(t)\in \mathcal{C}\]
+\[G\prime=\begin{bmatrix}-r_0(t) & 1 & 0 & \cdots &0\\ -r_1(t) & 0&1&\cdots &0\\ \vdots \\
+-r_{k-1}(t)&0&0&\cdots&1\end{bmatrix}\] je potem generatorska matrika za $\mathcal{C}$.
+\subsection{Kodiranje}
+\[t^{n-k}s(t) = q(t)g(t)+r(t)\Rightarrow x(t) = t^{n-k}*s(t)-r(t)\in \mathcal{C}\]
+\section{Reed-Solomonovi kodi}
+\[\alpha_1,\alpha_2,\ldots,\alpha_p\in GF(q), \alpha_i\neq 0, \alpha_i\neq\alpha_j\]
+\[\Rightarrow g(t)=(t-\alpha_1)(t-\alpha_2)\cdots(t-\alpha_p)|t^{q-1}-1\]
+$g(t)$ generira linearen cikličen kod dolžine $n=q-1$ nad $GF(q)$ dimenzije $n-p$.
+
+Naj bo $n=2^r-1, \delta\in\{2,\ldots,n\}$, $\beta$ primitiven element $GF(2^r)$. \textbf{Reed-Solomonov kod}
+$RS(n,k)$ je cikličen linearen kod dolžine $n$ in dimenzije $k=n-\delta+1$ nad $GF(2^r)$,
+generiran s polinomom $g(t) = (t-\beta)(t-\beta^2)\cdots(t-\beta^{\delta-1})$
+
+Naj bo $\mathcal{C}$ Reed-Solomonov kod dolžine $n=2^r-1$ in dimenzije $k$.
+Potem je $d(\mathcal{C})=n-k+1$.
+
+To pomeni, da Reed-Solomonov kod doseže Singletonovo mejo -- popravi največje število napak
+glede na št. simbolov, ki jih dodamo sporočilu.
 \end{multicols}
 \end{document}
